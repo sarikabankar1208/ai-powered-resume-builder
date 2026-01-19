@@ -17,6 +17,10 @@ backend/venv/
 # Supabase temp
 frontend/supabase/.temp/
 
+backend/render.yaml
+backend/runtime.txt
+
+
 
 # Node modules
 node_modules/
