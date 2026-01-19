@@ -1,6 +1,5 @@
 from flask import Blueprint, request, jsonify
 import os
-import google.generativeai as genai
 
 # Create Blueprint
 ai_bp = Blueprint("ai_bp", __name__)
@@ -45,6 +44,7 @@ Guidelines:
 """.strip()
 
     try:
+        import google.generativeai as genai 
         response = model.generate_content(prompt)
 
         return jsonify({
