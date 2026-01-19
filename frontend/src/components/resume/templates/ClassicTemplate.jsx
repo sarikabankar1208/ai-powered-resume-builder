@@ -1,0 +1,115 @@
+//Helper to format YYYY-MM → Mon YYYY
+const formatMonthYear = (value) => {
+  if (!value) return "";
+
+  const [year, month] = value.split("-");
+  const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  ];
+
+  return `${monthNames[parseInt(month, 10) - 1]} ${year}`;
+};
+
+function ClassicTemplate({ formData, accent }) {
+  return (
+    
+    <div className={`resume-preview-inner ${accent}`}>
+      <h1 className="preview-name">
+        {formData.fullName || "Your Name"}
+      </h1>
+
+      <div className="preview-contact">
+        {formData.email && <span>✉ {formData.email}</span>}
+        {formData.phone && <span>📞 {formData.phone}</span>}
+        {formData.location && <span>📍 {formData.location}</span>}
+        {formData.linkedin && <span>🔗 {formData.linkedin}</span>}
+      </div>
+
+      <hr />
+
+      {/* SUMMARY */}
+      {formData.summary && (
+        <div className="preview-section">
+          <h3 className="preview-section-title">
+            PROFESSIONAL SUMMARY
+          </h3>
+          <p className="preview-section-text">
+            {formData.summary}
+          </p>
+        </div>
+      )}
+
+      {/* EXPERIENCE */}
+      {formData.experiences?.length > 0 && (
+        <div className="preview-section">
+          <h3 className="preview-section-title">
+            PROFESSIONAL EXPERIENCE
+          </h3>
+
+          {formData.experiences.map((exp, index) => (
+            <div key={index} className="preview-experience">
+              <div className="preview-exp-header">
+                <strong>{exp.role}</strong>
+                <span>
+                  {formatMonthYear(exp.startDate)} –{" "}
+                  {exp.current ? "Present" : formatMonthYear(exp.endDate)}
+                </span>
+              </div>
+              <div className="preview-exp-company">{exp.company}</div>
+              <div className="preview-exp-desc">{exp.description}</div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* EDUCATION */}
+      {formData.education?.length > 0 && (
+        <div className="preview-section">
+          <h3 className="preview-section-title">EDUCATION</h3>
+
+          {formData.education.map((edu, index) => (
+            <div key={index} className="preview-education">
+              <div className="preview-edu-header">
+                <strong>{edu.degree} in {edu.field}</strong>
+                <span>{formatMonthYear(edu.passingDate)}</span>
+              </div>
+              <div className="preview-edu-college">{edu.college}</div>
+              {edu.gpa && <div className="preview-edu-gpa">GPA: {edu.gpa}</div>}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* PROJECTS */}
+      {formData.projects?.length > 0 && (
+        <div className="preview-section">
+          <h3 className="preview-section-title">PROJECTS</h3>
+
+          {formData.projects.map((project, index) => (
+            <div key={index} className="preview-project">
+              <div className="preview-project-title">{project.title}</div>
+              <div className="preview-project-desc">{project.description}</div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ---------- SKILLS ---------- */}
+      {formData.skills?.length > 0 && (
+        <div className="preview-section">
+          <h3 className="preview-section-title"> CORE SKILLS</h3>
+ 
+          <div className="preview-skills">
+            {formData.skills.map((skill, index) => (
+              <span key={index} className="preview-skill">
+              • {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+export default ClassicTemplate;

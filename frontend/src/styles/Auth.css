@@ -1,0 +1,32 @@
+.auth-card {
+  width: 360px;
+  margin: 80px auto;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.auth-card input {
+  width: 100%;
+  padding: 10px;
+  margin: 12px 0;
+}
+
+.auth-card button {
+  width: 100%;
+  padding: 12px;
+  background: #00c853;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.switch-text {
+  margin-top: 15px;
+}
+
+.error {
+  color: red;
+}

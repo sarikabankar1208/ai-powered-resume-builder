@@ -1,0 +1,76 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  background-color: #1f1f1f;
+}
+
+.navbar-title {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 32px; /* 👈 THIS increases space between Login & Register */
+}
+
+.nav-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 8px 20px;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+}
+
+
+.logout-btn {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.logo{
+  color: white;
+  font-size: 1.8rem;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 14px;              /* spacing between buttons */
+  align-items: center;
+}
+
+.auth-btn {
+  text-decoration: none;
+  background: transparent;
+  color: white;
+  border: 1.5px solid white;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.auth-btn:hover {
+  background: white;
+  color: #1e1e1e;
+}
+
+.auth-btn.outline {
+  border-color: #9b59ff;   /* purple accent */
+  color: #9b59ff;
+}
+
+.auth-btn.outline:hover {
+  background: #9b59ff;
+  color: white;
+}

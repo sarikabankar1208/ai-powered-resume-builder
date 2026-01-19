@@ -1,0 +1,26 @@
+# Environment files
+.env
+frontend/.env
+backend/.env
+
+# Secrets
+backend/huggingfacePassword.txt
+project register creadentials.txt
+
+# Python
+venv/
+backend/venv/
+
+# Editor
+.vscode/
+
+# Supabase temp
+frontend/supabase/.temp/
+
+
+# Node modules
+node_modules/
+
+# Python
+__pycache__/
+

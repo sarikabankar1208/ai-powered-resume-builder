@@ -1,0 +1,365 @@
+/* ======================================================
+   RESUME PREVIEW STYLES (RIGHT PANEL)
+   Applies to: Classic Resume Preview
+====================================================== */
+
+/* Preview container */
+.resume-preview {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  min-height: 500px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.16);
+}
+
+/* Base preview wrapper */
+.resume-preview-inner {
+  padding: 24px;
+  border-radius: 12px;
+}
+
+/* ================= HEADER ================= */
+
+/* Candidate name */
+.preview-name {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase; /* 🔥 NAME ALWAYS UPPERCASE */
+}
+
+/* Contact details row */
+.preview-contact {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: #374151;
+}
+
+/* Divider line */
+.resume-preview-inner hr {
+  margin-top: 20px;
+  border: none;
+  border-top: 2px solid currentColor;
+}
+
+/* ================= ACCENT COLORS ================= */
+
+.resume-preview-inner.blue { color: #2563eb; }
+.resume-preview-inner.green { color: #16a34a; }
+.resume-preview-inner.purple { color: #7c3aed; }
+.resume-preview-inner.orange { color: #ea580c; }
+.resume-preview-inner.gray { color: #374151; }
+
+/* ================= SECTIONS ================= */
+
+/* Section wrapper */
+.preview-section {
+  margin-top: 18px;
+}
+
+/* Section title */
+.preview-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+/* Section content text */
+.preview-section-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #374151;
+}
+
+/* ================= EXPERIENCE ================= */
+
+.preview-experience {
+  margin-top: 20px;
+  padding-left: 12px;
+  border-left: 3px solid currentColor;
+  color: black;
+}
+
+.preview-exp-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
+}
+
+.preview-exp-company {
+  margin-top: 10px;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: black;
+}
+
+.preview-exp-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: black;
+}
+
+/* ===== EDUCATION PREVIEW ===== */
+
+.preview-education {
+  margin-top: 12px;
+  color: black;
+}
+
+.preview-edu-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
+}
+
+.preview-edu-college {
+  font-size: 14px;
+  margin: 4px 0;
+  color: black;
+}
+
+.preview-edu-gpa {
+  font-size: 13px;
+  color: #374151;
+}
+
+/* ===== PROJECTS PREVIEW ===== */
+.preview-project {
+  padding-left: 12px;
+  margin-bottom: 16px;
+  border-left: 3px solid currentColor;
+  color: black;
+}
+
+.preview-project-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: black;
+}
+
+.preview-project-desc {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.6;
+}
+
+
+/* ================= EDUCATION ================= */
+
+.preview-education {
+  margin-top: 12px;
+}
+
+.preview-edu-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.preview-edu-college {
+  font-size: 14px;
+}
+
+.preview-edu-gpa {
+  font-size: 13px;
+}
+
+/* ================= SKILLS PREVIEW ================= */
+
+/* Skill layout with extra spacing */
+.preview-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 40px; /* vertical | horizontal */
+  margin-top: 10px;
+}
+
+/* Individual skill */
+.preview-skill {
+  font-size: 14px;
+  color: #222;
+}
+
+/* ===============================
+   RIGHT PREVIEW COLUMN
+================================ */
+.resume-preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ===============================
+   ACTION BUTTON BAR (TOP RIGHT)
+================================ */
+.resume-preview-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.share-btn,
+.download-btn {
+  padding: 6px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #6d5b5b;
+  background: #f9f9f9;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.share-btn:hover,
+.download-btn:hover {
+  background: #eee;
+}
+
+/* ---------- PROGRESS BAR ---------- */
+.progress-bar-wrapper {
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  margin: 12px 0 20px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #22c55e;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* ===============================
+   RESUME CARD (WHITE PREVIEW)
+================================ */
+.resume-preview {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.16);
+  min-height: 550px;
+  margin:0;
+}
+
+/* Ensure only resume is captured */
+#resume-preview {
+  width: 100%;
+}
+
+/* ===============================
+   SHARE MODAL OVERLAY
+================================ */
+.share-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* ===============================
+   SHARE MODAL BOX
+================================ */
+.share-popup {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Share modal buttons */
+.share-popup button {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background: #f9f9f9;
+}
+
+.share-popup button:hover {
+  background: #eee;
+}
+
+/* Close button */
+.close-btn {
+  background: #ddd;
+  font-weight: 500;
+}
+
+/* PDF SAFE WIDTH */
+#print-resume {
+  width: 210mm;
+  background: #fff;
+}
+
+/* Prevent awkward splits */
+.preview-section,
+.preview-experience,
+.preview-education,
+.preview-project {
+  page-break-inside: avoid;
+}
+
+/* ================= PRINT MODE ================= */
+@media print {
+
+  /* Hide EVERYTHING */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Show ONLY resume */
+  #resume-preview,
+  #resume-preview * {
+    visibility: visible;
+  }
+
+  /* Position resume at top-left */
+  #resume-preview {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  /* A4 page setup */
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+
+  /* Prevent section breaking */
+  .preview-section {
+    page-break-inside: avoid;
+  }
+
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+}
+
+
+
