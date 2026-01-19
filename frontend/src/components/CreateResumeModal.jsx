@@ -24,7 +24,7 @@ function CreateResumeModal({ onCancel, onCreate }) {
           <button
             className="create-btn"
             disabled={!title.trim()}
-            onClick={() => onCreate(title)}
+            onClick={() => onCreate(title.trim())}
           >
             Create
           </button>
@@ -35,3 +35,4 @@ function CreateResumeModal({ onCancel, onCreate }) {
 }
 
 export default CreateResumeModal;
+

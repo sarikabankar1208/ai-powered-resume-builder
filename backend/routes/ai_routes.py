@@ -8,12 +8,16 @@ ai_bp = Blueprint("ai_bp", __name__)
 # Configure Gemini
 genai.configure(api_key=os.getenv("gemini_resume_builder_api_key"))
 
-# Load only the required model (no listing)
+# Load only the required model
 model = genai.GenerativeModel("gemini-2.5-flash")
 
 
-@ai_bp.route("/generate-summary", methods=["POST"])
+@ai_bp.route("/generate-summary", methods=["POST", "OPTIONS"])
 def generate_summary():
+    # ✅ Handle preflight request
+    if request.method == "OPTIONS":
+        return jsonify({"status": "ok"}), 200
+
     data = request.json
 
     years = data.get("years", 0)
@@ -57,3 +61,4 @@ Guidelines:
             "status": "error",
             "message": str(e)
         }), 500
+

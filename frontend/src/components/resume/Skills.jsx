@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../../supabaseClient";
+import { useSearchParams } from "react-router-dom";
 
 function Skills({ formData, setFormData, setCurrentStep }) {
   const [skillInput, setSkillInput] = useState("");
@@ -8,6 +9,10 @@ function Skills({ formData, setFormData, setCurrentStep }) {
   // ✅ Toast state
   const [showToast, setShowToast] = useState(false);
   const [toastType, setToastType] = useState(""); // success | error
+
+  // ✅ get resumeId ONCE (required)
+  const [searchParams] = useSearchParams();
+  const resumeId = searchParams.get("resumeId");
 
   const addSkill = () => {
     if (!skillInput.trim()) return;
@@ -29,30 +34,25 @@ function Skills({ formData, setFormData, setCurrentStep }) {
     });
   };
 
-  // ✅ SAVE SKILLS TO DATABASE
+  // ✅ SAVE SKILLS TO DATABASE (FIXED)
   const saveSkills = async () => {
     try {
       const { data, error: userError } = await supabase.auth.getUser();
 
-      if (userError || !data.user) {
+      if (userError || !data.user || !resumeId) {
         setToastType("error");
         setShowToast(true);
         setTimeout(() => setShowToast(false), 2000);
         return;
       }
 
-      const user = data.user;
-
       const { error } = await supabase
         .from("resumes")
-        .upsert({
-          user_id: user.id,
+        .update({
           skills: skills,
           updated_at: new Date(),
-        },
-        {
-          onConflict: "user_id",
-        });
+        })
+        .eq("id", resumeId);
 
       setToastType(error ? "error" : "success");
       setShowToast(true);

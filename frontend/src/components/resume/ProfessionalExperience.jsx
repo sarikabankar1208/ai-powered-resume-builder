@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../../supabaseClient";
+import { useSearchParams } from "react-router-dom";
 
 function ProfessionalExperience({
   formData,
@@ -11,6 +12,10 @@ function ProfessionalExperience({
   // ✅ Toast state
   const [showToast, setShowToast] = useState(false);
   const [toastType, setToastType] = useState(""); // success | error
+
+  // ✅ Get resumeId ONCE (correct hook usage)
+  const [searchParams] = useSearchParams();
+  const resumeId = searchParams.get("resumeId");
 
   const addExperience = () => {
     setFormData({
@@ -45,47 +50,38 @@ function ProfessionalExperience({
     setFormData({ ...formData, experiences: updated });
   };
 
-  // ✅ SAVE TO DATABASE
+  // ✅ SAVE TO DATABASE (FIXED)
   const saveExperience = async () => {
-  try {
-    const { data: authData, error: authError } =
-      await supabase.auth.getUser();
+    try {
+      const { data: authData, error: authError } =
+        await supabase.auth.getUser();
 
-    if (authError || !authData.user) {
+      if (authError || !authData.user || !resumeId) {
+        setToastType("error");
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 2000);
+        return;
+      }
+
+      const { error } = await supabase
+        .from("resumes")
+        .update({
+          experiences: formData.experiences, // ✅ CORRECT COLUMN
+          updated_at: new Date(),
+        })
+        .eq("id", resumeId);
+
+      setToastType(error ? "error" : "success");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
+
+    } catch (err) {
+      console.error(err);
       setToastType("error");
       setShowToast(true);
       setTimeout(() => setShowToast(false), 2000);
-      return;
     }
-
-    const { error: upsertError } = await supabase
-      .from("resumes")
-      .upsert(
-        {
-          user_id: authData.user.id,
-          experience: experiences,
-          updated_at: new Date(),
-        },
-        { onConflict: "user_id" }
-      );
-
-    if (upsertError) {
-      console.error(upsertError);
-      setToastType("error");
-    } else {
-      setToastType("success");
-    }
-
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000);
-
-  } catch (err) {
-    console.error(err);
-    setToastType("error");
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000);
-  }
-};
+  };
 
   return (
     <>
@@ -207,3 +203,4 @@ function ProfessionalExperience({
 }
 
 export default ProfessionalExperience;
+

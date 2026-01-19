@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../../supabaseClient";
+import { useSearchParams } from "react-router-dom";
 
 function Projects({ formData, setFormData, setCurrentStep }) {
   const projects = formData.projects || [];
@@ -7,6 +8,10 @@ function Projects({ formData, setFormData, setCurrentStep }) {
   // ✅ Toast state
   const [showToast, setShowToast] = useState(false);
   const [toastType, setToastType] = useState(""); // success | error
+
+  // ✅ GET resumeId (LOGIC FIX)
+  const [searchParams] = useSearchParams();
+  const resumeId = searchParams.get("resumeId");
 
   const addProject = () => {
     setFormData({
@@ -29,32 +34,25 @@ function Projects({ formData, setFormData, setCurrentStep }) {
     });
   };
 
-  // ✅ SAVE PROJECTS TO DATABASE
+  // ✅ SAVE PROJECTS TO DATABASE (FIXED LOGIC ONLY)
   const saveProjects = async () => {
     try {
       const { data, error: userError } = await supabase.auth.getUser();
 
-      if (userError || !data.user) {
+      if (userError || !data.user || !resumeId) {
         setToastType("error");
         setShowToast(true);
         setTimeout(() => setShowToast(false), 2000);
         return;
       }
 
-      const user = data.user;
-
       const { error } = await supabase
-      .from("resumes")
-      .upsert(
-        {
-          user_id: user.id,
-          projects: projects,
+        .from("resumes")
+        .update({
+          projects: projects,   // ✅ CORRECT COLUMN
           updated_at: new Date(),
-        },
-        {
-          onConflict: "user_id",
-        }
-      );
+        })
+        .eq("id", resumeId);    // ✅ CORRECT IDENTIFIER
 
       setToastType(error ? "error" : "success");
       setShowToast(true);

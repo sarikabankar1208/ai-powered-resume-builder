@@ -1,5 +1,6 @@
 import { supabase } from "../../supabaseClient";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 function PersonalInfo({
   formData,
@@ -15,35 +16,36 @@ function PersonalInfo({
   const [showToast, setShowToast] = useState(false);
   const [toastType, setToastType] = useState(""); // success | error
 
+  // ✅ Get resumeId from URL
+  const [searchParams] = useSearchParams();
+  const resumeId = searchParams.get("resumeId");
+
   const savePersonalInfo = async () => {
     try {
       const { data, error: userError } = await supabase.auth.getUser();
 
-      if (userError || !data.user) {
+      if (userError || !data.user || !resumeId) {
         setToastType("error");
         setShowToast(true);
         setTimeout(() => setShowToast(false), 2000);
         return;
       }
 
-      const user = data.user;
-
-      const { error } = await supabase.from("resumes").upsert({
-        user_id: user.id,
-        personal_info: {
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          location: formData.location,
-          profession: formData.profession,
-          linkedin: formData.linkedin,
-          website: formData.website,
-        },
-        updated_at: new Date(),
-        },
-        {
-          onConflict: "user_id",
-        });
+      const { error } = await supabase
+        .from("resumes")
+        .update({
+          personal_info: {
+            fullName: formData.fullName,
+            email: formData.email,
+            phone: formData.phone,
+            location: formData.location,
+            profession: formData.profession,
+            linkedin: formData.linkedin,
+            website: formData.website,
+          },
+          updated_at: new Date(),
+        })
+        .eq("id", resumeId);
 
       setToastType(error ? "error" : "success");
       setShowToast(true);
@@ -61,7 +63,6 @@ function PersonalInfo({
     <div className="personal-info-wrapper">
       {/* ---------- TOP BAR ---------- */}
       <div className="form-toolbar">
-
         <div className="toolbar-spacer" />
 
         <button

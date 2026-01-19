@@ -21,7 +21,7 @@ function Dashboard() {
 
     const { data } = await supabase
       .from("resumes")
-      .select("id, personal_info, updated_at")
+      .select("id, resume_title, personal_info, updated_at")
       .eq("user_id", auth.user.id)
       .order("updated_at", { ascending: false });
 
@@ -29,9 +29,30 @@ function Dashboard() {
   };
 
   /* 🔹 CREATE RESUME (MODAL FLOW) */
-  const handleCreate = () => {
+  const handleCreate = async (resumeTitle) => {
     setShowModal(false);
-    navigate("/resume-builder");
+
+    const { data: auth } = await supabase.auth.getUser();
+    if (!auth?.user) return;
+
+    const { data, error } = await supabase
+      .from("resumes")
+      .insert({
+        user_id: auth.user.id,
+        resume_title: resumeTitle,
+        personal_info: {},
+        updated_at: new Date()
+      })
+      .select()
+      .single();
+    if (error) {
+    console.error("Create resume error:", error);
+    alert("Failed to create resume");
+    return;
+    }
+  
+
+    navigate(`/resume-builder?resumeId=${data.id}`);
   };
 
   /* 🔹 DELETE */
@@ -44,7 +65,6 @@ function Dashboard() {
 
   /* 🔹 EDIT */
   const handleEdit = (id) => {
-    if (!window.confirm("Do you want to update this resume?")) return;
     navigate(`/resume-builder?resumeId=${id}`);
   };
 
@@ -78,7 +98,7 @@ function Dashboard() {
             <div className="resume-icon">📄</div>
 
             <p className="resume-title">
-              {resume.personal_info?.fullName || "Untitled Resume"}
+              {resume.resume_title || "Untitled Resume"}
             </p>
 
             <p className="resume-date">

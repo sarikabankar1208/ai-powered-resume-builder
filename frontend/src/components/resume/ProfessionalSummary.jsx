@@ -1,36 +1,41 @@
 import { useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { generateSummary } from "../../services/aiSummaryService";
+import { useSearchParams } from "react-router-dom";
 
 function ProfessionalSummary({ formData, setFormData, setCurrentStep }) {
   const [showToast, setShowToast] = useState(false);
   const [toastType, setToastType] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
 
+  // ✅ GET resumeId (LOGIC FIX)
+  const [searchParams] = useSearchParams();
+  const resumeId = searchParams.get("resumeId");
+
   /* ---------------- SAVE TO DATABASE ---------------- */
   const saveProfessionalSummary = async () => {
     try {
       const { data, error: userError } = await supabase.auth.getUser();
 
-      if (userError || !data.user) {
+      if (userError || !data.user || !resumeId) {
         setToastType("error");
         setShowToast(true);
         setTimeout(() => setShowToast(false), 2000);
         return;
       }
 
-      const { error } = await supabase.from("resumes").upsert(
-        {
-          user_id: data.user.id,
+      const { error } = await supabase
+        .from("resumes")
+        .update({
           professional_summary: formData.summary,
           updated_at: new Date(),
-        },
-        { onConflict: "user_id" }
-      );
+        })
+        .eq("id", resumeId);
 
       setToastType(error ? "error" : "success");
       setShowToast(true);
       setTimeout(() => setShowToast(false), 2000);
+
     } catch (err) {
       console.error(err);
       setToastType("error");
@@ -41,62 +46,50 @@ function ProfessionalSummary({ formData, setFormData, setCurrentStep }) {
 
   /* ---------------- AI GENERATE ---------------- */
   const handleAIGenerate = async () => {
-  try {
-    setAiLoading(true);
+    try {
+      setAiLoading(true);
 
-    const years = Number(formData.experience) || 0;
+      const years = Number(formData.experience) || 0;
 
-    const skills = [
-      ...(formData.backendSkills || []),
-      ...(formData.frontendSkills || []),
-      ...(formData.cloudSkills || []),
-      ...(formData.databaseSkills || [])
-    ];
+      const skills = [
+        ...(formData.backendSkills || []),
+        ...(formData.frontendSkills || []),
+        ...(formData.cloudSkills || []),
+        ...(formData.databaseSkills || [])
+      ];
 
-    const experienceLevel =
-      years < 1 ? "Entry-level" :
-      years < 3 ? "Junior" :
-      years < 6 ? "Mid-level" :
-      "Senior";
+      const experienceLevel =
+        years < 1 ? "Entry-level" :
+        years < 3 ? "Junior" :
+        years < 6 ? "Mid-level" :
+        "Senior";
 
-    const payload = {
-      years,
-      experienceLevel,
-      skills,
-      roughSummary: formData.summary?.trim() || ""
-    };
+      const payload = {
+        years,
+        experienceLevel,
+        skills,
+        roughSummary: formData.summary?.trim() || ""
+      };
 
-    const response = await fetch("http://localhost:5000/api/generate-summary", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
+      const result = await generateSummary(payload);
 
+      if (!result || result.status !== "success") {
+        alert("AI generation failed");
+        return;
+      }
 
-    const result = await response.json();
+      setFormData({
+        ...formData,
+        summary: result.optimized_resume
+      });
 
-    if (!response.ok || result.status !== "success") {
-      alert(result.message || "AI generation failed");
-      return;
+    } catch (error) {
+      console.error(error);
+      alert("AI generation failed");
+    } finally {
+      setAiLoading(false);
     }
-
-    setFormData({
-      ...formData,
-      summary: result.optimized_resume
-    });
-
-  } catch (error) {
-    console.error(error);
-    alert("AI generation failed");
-  } finally {
-    setAiLoading(false);
-  }
-};
-
-
-
+  };
 
   return (
     <>
