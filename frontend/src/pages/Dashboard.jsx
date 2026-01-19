@@ -71,7 +71,7 @@ function Dashboard() {
   return (
     <div className="dashboard-container">
       <p className="dashboard-title">
-        You can now build and optimize your resume.
+        You can now build and optimize your resume 🚀 (Updated)
       </p>
 
       {/* CREATE RESUME */}
