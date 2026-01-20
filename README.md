@@ -88,10 +88,13 @@ The system follows a **modular, scalable architecture**:
 
 ---
 
-## 🌐 Live Demo
+## 🔗 Live Project Links
 
-**Deployed Frontend:**  
-https://ai-powered-resume-builder-r3avdw2va.vercel.app/
+- 🌐 Frontend (Vercel):  
+  https://ai-powered-resume-builder-i9t7l3nzs.vercel.app
+
+- ⚙️ Backend API (PythonAnywhere):  
+  https://sbankar1208.pythonanywhere.com
 
 ---
 
