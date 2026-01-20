@@ -1,7 +1,10 @@
 // src/services/aiSummaryService.js
+
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 export const generateSummary = async (payload) => {
   const response = await fetch(
-    "http://127.0.0.1:10000/api/generate-summary",
+    `${BASE_URL}/api/generate-summary`,
     {
       method: "POST",
       headers: {
