@@ -83,10 +83,6 @@ The system follows a **modular, scalable architecture**:
 
 ## 🚀 Deployment
 
-- **Frontend:** Deployed on Vercel  
-- **Backend:** Flask API (local / cloud-ready)  
-
----
 
 ## 🔗 Live Project Links
 
