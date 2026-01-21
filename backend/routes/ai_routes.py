@@ -42,7 +42,6 @@ Guidelines:
 - Write 3–4 professional sentences
 - Improve clarity, structure, and impact
 - Highlight technical expertise and real-world contribution
-- Match tone to a {experience_level} software engineer
 - Do NOT mention entry-level roles unless experience is below 1 year
 - Avoid first-person pronouns
 - Ensure uniqueness
